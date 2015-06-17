@@ -1,0 +1,665 @@
+# Flex Box
+This Document was written by me as a way to learn the concepts of the Flexible Box layout. I referenced a few sources which taught me how to use Flex Box, I've listed each of them bellow. Feel free to explore and learn.
+
+Some of the information in my post is from [Dive into flex box](http://bocoup.com/weblog/dive-into-flexbox/). This is a great article on all that flex box has to offer. Reference it :)
+
+Another really cool place for learning flex box is [a visual guide to flex box layout.](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties) This tutorial has great visuals on explaining all the concepts flex box related. This is a must read.  
+
+Last but not least I referenced from the W3C spec. Yeah it can be a little overwhelming but it's where flex box is documented most accurately, so don't feel afraid to look at the [CSS Flexible Box Layout Module Level 1](http://www.w3.org/TR/css-flexbox-1/#flex-basis).
+
+## Concepts and Terminology
+
+* flex containers
+* flex items
+
+Flex box has *flex containers* and *Flex Items*. A flex container is declared by setting the display property of an element to `flex`  or `inline-flex`.
+
+* `flex` renders the container as **block**
+* `inline-flex` renders the container as **inline**
+
+Here is an example is a Flex Container.
+
+```html
+<div class="container-flex">
+    <div class="flex-item">Flex1</div>
+    <div class="flex-item">Flex1</div>
+</div>
+```
+Notice how I declared the class of `container-flex` as the **container** and each individual `div` is a `flex-item`. This is exactly how containers and flex items work together. Think it like this, the container is the glass jar and the flex items are the items inside of the jar!
+
+Now here comes the fun part. I am going to add the property of `display:flex;`  to `flex-container` this makes `flex-container` **a block level element**.
+
+```css
+.flex-container{
+    /*block level element*/
+    display: flex;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+Here we have our Flex Items. They are the small individual boxes that are sitting inside of our `flex-container` `div`
+
+```css
+.flex-item{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-color: green;
+}
+```
+
+[Introduction](https://jsfiddle.net/kapena/vaytyhk3/embedded/result/)
+
+To customize your flex box layout you need to change the direction of the flex line. By default the flex line goes in the direction of text: left to right, top to bottom.
+
+# Writing modes
+
+When you look at the illustration bellow you can see that the writing mode is left-to-right which means that our flex line follows the direction of the text which is in left-to-right mode, is left to right top to bottom.
+
+So what if I were to change the direction of the text with the `direction` property? *Well the direction of the flex line will change which will then change the direction of the flex items*. Another thing to take note on would be if we changed the `writing-mode` the directions of the main axes and the cross axes would also change.
+
+### So is a writing mode?
+Writing Modes are a new way to write text right-to-left, or even vertically, as you might in certain languages.
+
+Writing Modes are a work-in-progress, but Chrome currently supports the `direction` CSS property. If we set the `direction` in the previous example to `rtl` (right-to-left) then not only is the text drawn right to left, but also the Flex Line changes direction, changing the page layout entirely.
+
+```css
+.body{
+    direction: rtl;
+}
+```
+In flex box you can just say "right", "left", "up", "down" when you are making no language assumptions to the layout.
+
+
+# The main axis and cross axis
+Flex box uses a *main axes* and a *cross axes*.
+
+## Main Axes
+
+The main axis of a flex container is the primary axis that flex items are laid out on. It extends in the main dimension.
+
+* Flex lines follow the *Main Axes*
+
+### Main Start, Main End
+In my illustration bellow you can see that flex items are being placed within the container starting on the *main-start* side and moving toward the *main-end* side of the container.
+
+### Main Size
+A flex item’s width or height, whichever is in the main dimension, is the item’s main size.
+
+## Cross Axes
+The Cross Axes is the axis perpendicular to the main axis.
+
+### Cross start, cross end
+Flex lines are filled with items and placed into the container starting on the *cross-start* side of the flex container and going toward the *cross-end side*
+
+### Cross Size
+The width or height of a flex item, whichever is in the cross dimension, is the item’s cross size.
+
+![Flex Axes](https://s3-us-west-2.amazonaws.com/designdiagrams/flex-directions-01.jpg)
+
+The names for the starting points, ending points, and directions of each axis are as follows:
+
+* Main Start
+* Main End
+* Main Direction (sometimes called the Flow Direction)
+* Cross Start
+* Cross End
+* Cross Direction
+
+# Properties of the Flex Container
+
+## flex-direction
+
+`flex-direction`
+
+The property of `flex-direction` allows us to change the axes of the our `flex-container` the default `flex-direction` is `row`. With `row` flex items are laid out in the direction of the `writing-mode`: *left to right, top to bottom*.
+
+### row-reverse
+The Main Start and Main End are swapped. If the writing-mode is left to right, Flex Items are now laid out right to left.
+
+![row-reverse](https://s3-us-west-2.amazonaws.com/designdiagrams/flex-row-reverse.jpg)
+
+### column
+The Main Axis and the Cross Axis are swapped. If the writing system is horizontal, the Flex Items are now laid out vertically.
+
+![column](https://s3-us-west-2.amazonaws.com/designdiagrams/flex-column)
+
+### column-reverse
+Same as column, but reversed.
+
+So how about we change the `flex-direction` in the last example to `column`
+
+```css
+.flex-container{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+
+### flex-direction fiddle
+
+[flex-direction](https://jsfiddle.net/kapena/vaytyhk3/2/)
+
+
+## Justify Content
+
+`justify-content`
+
+Adjusts the positions of Flex Items on the Main Axis.
+
+Possible values are
+---
+
+* `flex-start`
+
+The cross-start margin edge of the flex item is placed flush with the cross-start edge of the line.
+
+* `flex-end`
+
+The cross-end margin edge of the flex item is placed flush with the cross-end edge of the line.
+
+* `center`
+
+The flex item’s margin box is centered in the cross axis within the line. (If the cross size of the flex line is less than that of the flex item, it will overflow equally in both directions.)
+
+Say we want to `center` our flex items on the *main axes* how might we do that? Use `justify-content:center;`
+
+```css
+.flex-container{
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+
+### justify-content fiddle
+
+[justify-content](http://jsfiddle.net/kapena/vaytyhk3/3/)
+
+
+Up to this point we have touched on `flex-start`, `flex-end`, `center` ,`space-between` and `space-around`. To understand these properties a little better I created an illustration to explain what each one dose.
+
+![Flex-properties](https://s3-us-west-2.amazonaws.com/designdiagrams/propertiesOfFlexcontainer-01.jpg)
+
+# Align Items
+
+`align-items`
+
+What to align something with flexbox? No sweat at all!
+
+The great advantage of using the `align-items` property is that it's complementary to `justify-content`. What the `align-items` property dose is it adjusts the way Flex Items are positioned on the *Cross Axis*.  
+
+Possible values are
+---
+
+* `baseline`
+
+If the flex item’s inline axis is the same as the cross axis, this value is identical to `flex-start`.
+
+* `stretch`
+
+If the cross size property of the `flex` item computes to `auto`, and neither of the cross-axis margins are `auto`, the flex item is stretched out from the Cross Start to the Cross End.
+
+So we want center our `flex-items` and we can use the `align-items` property to `center` our `flex-items` on the *cross axis*.
+
+```css
+.flex-container{
+    display: flex;
+    /*centers flex-items on the cross axes*/
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+## align-items fiddle
+
+[align-items](http://jsfiddle.net/kapena/vaytyhk3/4/)
+
+
+## Flex Wrap
+
+`flex-wrap`
+
+Up until this point, our Flex Container has had only one Flex Line. What if we wanted to add one more? `flex-wrap` can solve that for us by creating Flex Containers with multiple Flex Lines. The possible values for flex-wrap are:
+
+* nowrap (default)
+* wrap
+* wrap-reverse
+
+If `flex-wrap` is set to `wrap`, Flex Items wrap onto additional Flex Lines if there is not enough room for them on one Flex Line. Additional Flex Lines are added in the direction of the Cross Axis.
+
+We added an additional box!
+
+```html
+<div class="flex-item">flex3</div>
+```
+
+```css
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+See how the additional box we added dropped down? This happens bc there is not enough room for it to sit on the current line.
+
+`wrap-reverse` adds new Flex Lines in the opposite direction on the Cross Axis.
+
+## flex-wrap fiddle
+
+[flex-wrap](https://jsfiddle.net/kapena/vaytyhk3/7/)
+
+### align-content
+
+`align-content`
+
+The `align-content` property modifies the behavior of `flex-wrap`. `align-content` aligns Flex Lines.
+
+* stretch (default)
+* flex-start
+* flex-end
+* center
+* space-between
+* space-around
+
+Each of these values are comparable to their counterparts in `justify-content` and `align-items`.
+
+Here we set `align-content` to center which modifies the behavior of our `flex-wrap`
+
+```css
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+}
+```
+
+### align-content fiddle
+[align-content](https://jsfiddle.net/kapena/vaytyhk3/8/)
+
+## Flex Flow
+
+`flex-flow` is a shorthand for `flex-direction` and `flex-wrap`.
+
+flex-flow: [flex-direction] [flex-wrap]
+
+```css
+.flex-container{
+    flex-flow: column nowrap;
+}
+```
+
+## Properties of Flex Items
+
+Flex Item: *Any direct child of a flex container (text in a flex item also gets treated as a flex item)*
+
+If you tried to set `float` on a flex item you would achieve nothing, however you could float an element **inside** of a flex item and achieve a result.  
+
+Flex Items have a *Main Size* and a *Cross Size*.
+
+* The Main Size
+The size of the Flex Item in the Main Axes.
+
+* The Cross Size
+The size of the Flex Item in the Cross Axes.
+
+*Note*
+The width and height of a Flex Item could ether be it's Main Size or Cross Size. This is depending on Flex Containers axes.
+
+The following properties adjust the behavior of Flex Items.
+
+## order
+
+`order`
+
+When you set an `order` on a Flex Item you adjust their order when being rendered.
+
+How about we change the `order` of our flex items around! Lets make `flex2` the first in the container and `flex1` the second box in the container!
+
+To change `order` we need to add a class of `first` to our second `div`
+
+```html
+<div class="flex-item flex">flex2</div>
+```
+
+```css
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 300px;
+    height: 300px;
+}
+
+.flex-item{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+}
+
+/* changing the order of our flex items */
+.first{
+    order:-1;
+}
+```
+
+### Order Fiddle
+[order](https://jsfiddle.net/kapena/vaytyhk3/12/)
+
+This can be useful for accessibility, where the document order and the displayed `order` may need to be different.
+
+## margin
+
+`margin`
+
+You might know about a little thing in css called the normal effect of `margin:auto`. In case you haven't heard of this term then I'll explain how it works.  
+
+When you set the width of a block-level element it will prevent it from stretching out passed the edges of it's container. Once you have set the `width` of your block-level element then you can go set the left and right margins to `auto` to horizontally center your element within it's container!
+
+```css
+.main-element{
+    /*Setting the width of block level element*/
+    margin: 500px;
+    /*Set width or margins to horizontally center element*/
+    margin-right:0 auto;
+}
+```
+
+In flex box you can use this same technique but it comes with a two extra features!
+
+1. If you declare an an `auto`  margin it will absorb extra space around your element.
+
+2. It can be used to push flex items into different positions.
+
+So what if we want to absorb all the extra space to the right of our container element and then place our two `div`s to the utter most right side of the container?
+
+All we need to do is declare `margin-right:auto` inside of `.flex-item:first-child`
+
+```css
+.flex-item:first-child{
+    margin-right: auto;
+}
+```
+We are using the `:first-child` selector on our Flex Item to select all the `div`s after the `:first-child`
+```css
+/*Make width and height smaller*/
+.flex-item{
+    width: 50px;
+    height: 50px;
+    background-color: green;
+}
+```
+### margin-right fiddle  
+[margin-right](https://jsfiddle.net/kapena/vaytyhk3/11/)
+
+
+Have you ever wanted to center something directly in the middle of the page? Well`margin:auto` now takes care of it.
+
+In this case we only need one `div`
+
+```html
+<div class="flex-item">Centered up</div>
+```
+
+```css
+.flex-item{
+    width: 100px;
+    height: 100px;
+    /*centering the div*/
+    margin: auto;
+}
+```
+### Center fiddle
+[center](https://jsfiddle.net/kapena/vaytyhk3/10/)
+
+
+#align-self
+
+`align-self`
+
+When you use the `align-self` property on Flex Items it effectively overrides the Flex Containers `align-items` property for that item. `align-self` has the same values as `align-items`
+
+#### `flex-start`
+The cross-start margin edge of the flex item is placed flush with the cross-start edge of the line.
+
+#### `flex-end`
+The cross-end margin edge of the flex item is placed flush with the cross-end edge of the line.
+
+#### `center`
+The flex item’s margin box is centered in the cross axis within the line. (If the cross size of the flex line is less than that of the flex item, it will overflow equally in both directions.)
+
+#### `baseline`
+If the flex item’s inline axis is the same as the cross axis, this value is identical to `flex-start`.
+Otherwise, it participates in baseline alignment: all participating flex items on the line are aligned such that their baselines align, and the item with the largest distance between its baseline and its cross-start margin edge is placed flush against the cross-start edge of the line.
+
+#### `stretch`
+If the cross size property of the flex item computes to `auto`, and neither of the cross-axis margins are auto, the flex item is stretched.
+
+
+So why don't you try you're hand on giving each of our flex items there own `align-self` values? If you get stuck then the solution is bellow.
+
+We want create a `div` for each individual flex item and give them the class names like so `one` `two` etc...
+
+```html
+<div class="container-flex">
+    <div class="flex-item one">flex-start</div>
+    <div class="flex-item two">flex-end</div>
+    <div class="flex-item three">center</div>
+    <div class="flex-item four">base</div>
+    <div class="flex-item five">line</div>
+    <div class="flex-item six">stretch</div>
+</div>
+```
+
+Once we have the class names in place we can then move to our css where we will be using `align-self`
+
+```css
+.container-flex{
+    display:flex;
+    background-color:silver;
+    height:340px;
+    width:400px;
+}
+.flex-item{
+    margin:5px;
+    /*setting the min height of our flex items*/
+    min-height:100px;
+    width: 100px;
+    background-color: green;
+}
+
+
+/*flex-start*/
+.one{
+    align-self: flex-start;
+}
+/*flex-end*/
+.two{
+    align-self: flex-end;
+}
+/*center*/.
+.three{
+    align-self: center;
+}
+
+/*four is relative to five*/
+.four{
+    align-self: baseline;
+    padding: 2em 0;
+}
+.five{
+    align-self: baseline;
+}
+
+/*stretch*/
+.six{
+    align-self: stretch;
+}
+```
+The reason for including two `baseline` flex items (four and five) is because there alignment *must be relative to each other*.
+
+### Align self fiddle
+[align-self](https://jsfiddle.net/kapena/vaytyhk3/14/)
+
+
+# Are you Flexable? I hope so!
+Now that we have covered all the concepts above and you (hopefully) understand how most of flex box works then it's time to put the `flex` into the flex box.
+
+# flex-grow
+`flex-grow` determines how much the flex item will grow relative to the rest of the flex items in the flex container when positive space is distributed.
+
+```css
+.item1{
+    flex-grow:1;
+}
+.item2{
+    flex-grow:2;
+}
+.item3{
+    flex-grow:1;
+}
+```
+
+### Flex grow fiddle
+[flex-grow](https://jsfiddle.net/kapena/vaytyhk3/17/)
+
+# flex shrink
+
+`flex-shrink` determines how much the flex item will shrink relative to the rest of the flex items in the flex container when negative space is distributed.  
+
+`item1` and `item3` are shrinking by one space while `item2` is growing to spaces.
+
+```css
+/*Shrinking 1 space*/
+.item1{
+    flex-shrink: 1;
+}
+/*Grow 2 spaces*/
+.item2{
+    flex-grow: 2;
+}
+/*Shrinking 1 space*/
+.item3{
+    flex-shrink: 1;
+}
+```
+### Flex shrink fiddle
+[flex-shrink](https://jsfiddle.net/kapena/vaytyhk3/18/)
+
+
+#flex-basis
+
+`flex-basis`
+
+`flex-basis` takes the same values as the `width` and `height` property's and specifies the initial main size of the flex item. This takes place before free space is delegated according the flex factors.
+
+If the specified flex-basis is auto, the used flex basis is the computed value of the flex item’s main size property. If that value is itself auto, then the used flex basis is automatically-determined based on its content (i.e. sized as for content).
+
+```css
+.flex-item{
+    margin:5px;
+    background-color: green;
+}
+
+.item1{
+    flex-basis:auto;
+}
+.item2{
+    flex-basis:100px;
+}
+```
+### Flex basis fiddle
+
+[flex basis](https://jsfiddle.net/kapena/vaytyhk3/19/)
+
+
+# flex
+
+`flex:[number]`
+
+When we use the `flex` property it specifies how a Flex Item will be treated when free space is being allocated on the Main Axes.
+
+Let’s take look at each of the common values one at a time.
+
+`flex: [number]` specifies a number that represents the ratio of free space that will be taken by the flex item.
+
+```html
+<div class="flex-container">
+    <div class="flex-item item1">flex: 2</div>
+    <div class="flex-item item2">flex: 1</div>
+    <div class="flex-item item3">flex: 1</div>
+</div>
+```
+
+```css
+.flex-item{
+    margin:5px;
+    background-color: green;
+}
+
+/*2 out of 4 space consumed*/
+.item1{
+    flex: 2;
+}
+/*1 out of 4*/
+.item2{
+    flex: 1;
+}
+/*1 out of 4*/
+.item3{
+    flex: 1
+}
+/*total space consumed = 4 */
+```
+
+So in our code above the first flex item which is `item1` consumes 2/4 of free space available and the other two flex items consume 1/4 space available which then equates to 4 spaces consumed total out of all our flex items.
+
+### flex fiddle
+[Flex](https://jsfiddle.net/kapena/vaytyhk3/15/)
+
+
+## Evenly spaced
+
+If you wish to evenly distribute space then it would be useful to set every Flex Item number to `1` allowing free space to be allocated evenly.
+
+```html
+<div class="flex-container">
+    <div class="flex-item item1">flex: 1</div>
+    <div class="flex-item item2">flex: 1</div>
+    <div class="flex-item item3">flex: 1</div>
+</div>
+```
+Even across the board
+
+```css
+.flex-item{
+    margin:5px;
+    background-color: green;
+    flex:1
+}
+```
+
+## Evenly spaced fiddle
+[Evenly spaced](https://jsfiddle.net/kapena/vaytyhk3/16/)
+
+* `flex: initial`
+When a Flex Item with it's flex value is set to `initial` it will be inflexible when there is free space, but can shrink smaller if needed.
+
+* flex: auto
+When a Flex Item with its flex value is set to `auto` it will be fully flexible along the Main Axis.
+
+**NOTE**
+
+`auto` currently works in Opera 12.11 but does not work in Chrome 23.0.1271.95. You can often work around this by using flex: 1;.
