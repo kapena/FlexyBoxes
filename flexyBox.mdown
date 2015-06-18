@@ -48,7 +48,9 @@ To customize your flex box layout you need to change the direction of the flex l
 
 When you look at the illustration bellow you can see that the writing mode is left-to-right which means that our flex line follows the direction of the text which is in left-to-right mode, is left to right top to bottom.
 
-So what if I were to change the direction of the text with the `direction` property? *Well the direction of the flex line will change which will then change the direction of the flex items*. Another thing to take note on would be if we changed the `writing-mode` the directions of the main axes and the cross axes would also change.
+So what if I were to change the direction of the text with the `direction` property? *Well the direction of the flex line will change which will then change the direction of the flex items*.
+
+Another thing to take note on would be if we changed the `writing-mode` then directions of the main axes and the cross axes would also change. 
 
 ### So is a writing mode?
 Writing Modes are a new way to write text right-to-left, or even vertically, as you might in certain languages.
