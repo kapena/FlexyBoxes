@@ -1,8 +1,5 @@
 # Flex Box
-[Flexy box](https://github.com/kapena/FlexyBoxes/blob/master/flexyBox.mdown) is a document I created with notes and demos that I used to learn the concepts of the Flexible Box layout. I referenced all the sources listed bellow. Feel free to read my notes and try the demos! Also I'm evn more open to feedback so feel even more free to critique my notes!
-
-
-Most of the information in my notes is from [Dive into flex box](http://bocoup.com/weblog/dive-into-flexbox/). This is a great reference with lots of examples to play with. Thanks Bocoup for writing such an awesome post!
+[Flexy box](https://github.com/kapena/FlexyBoxes/blob/master/flexyBox.mdown) is a document I created with notes and demos that I used to learn the concepts of the Flexible Box layout. I referenced all the sources listed bellow. 
 
 Another really cool post that helped me with flex box is [a visual guide to flexbox layout.](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties) This article has great visuals on flex box concepts and syntax.
 
@@ -12,4 +9,4 @@ The last thing I'd like to add in is a really cool web app that helped me visual
 
 
 ### FlexyBox notes and demos
-[FlexyBox](https://github.com/kapena/FlexyBoxes/blob/master/flexyBox.mdown)
+[FlexyBox Demos](https://github.com/kapena/FlexyBoxes/blob/master/flexyBox.mdown)
